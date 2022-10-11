@@ -62,12 +62,10 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         mem = {}
-        l = 0
         for i in range(len(nums)):
             if target - nums[i] in mem:
                 return [i, mem[target-nums[i]]]
             mem[nums[i]] = i
-            i += 1
         return []
 # @lc code=end
 
