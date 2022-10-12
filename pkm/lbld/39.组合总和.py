@@ -61,22 +61,22 @@
 # @lc code=start
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        result = []
-        res = []
-        cursum = 0
         def backtrack(start):
             nonlocal cursum
             if cursum == target:
                 result.append(res[:])
                 return
-            if cursum > target:
-                return
             for i in range(start, len(candidates)):
+                if cursum + candidates[i] > target:
+                    continue
                 res.append(candidates[i])
                 cursum += candidates[i]
                 backtrack(i)
-                res.pop()
                 cursum -= candidates[i]
+                res.pop()
+        result = []
+        res = []
+        cursum = 0
         backtrack(0)
         return result
 # @lc code=end
