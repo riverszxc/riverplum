@@ -67,11 +67,9 @@ class Solution:
         """
         l = 0
         for n in [0, 1, 2]:
-            r = l
-            for i in range(l, len(nums)):
-                if nums[i] == n:
+            for r in range(l, len(nums)):
+                if nums[r] == n:
                     nums[l], nums[r] = nums[r], nums[l]
                     l += 1
-                r += 1
 # @lc code=end
 
