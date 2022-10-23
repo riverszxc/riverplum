@@ -51,10 +51,10 @@
 class Solution:
     def removeDuplicateLetters(self, s: str) -> str:
         exist = set()
-        q = []
         cnt = {}
         for x in s:
             cnt[x] = cnt.get(x, 0) + 1
+        q = []
         for x in s:
             cnt[x] -= 1
             if x in exist:

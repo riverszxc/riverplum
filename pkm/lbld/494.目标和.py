@@ -61,28 +61,52 @@
 # @lc code=start
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        n = len(nums)
-        path = []
-        mem = {}
-        def dp(i, remain):
-            # print(i, remain)
-            if i < 0:
-                if remain == 0:
-                    # print(','.join(path))
-                    return 1
-                return 0
-            k = str(i) + '_' + str(remain)
-            if k in mem:
-                return mem[k]
-            mem[k] = dp(i-1, remain + nums[i]) + dp(i-1, remain - nums[i])
-            return mem[k]
-            # path.append(str('-')+str(nums[i]))
-            # x1 = dp(i-1, remain + nums[i])
-            # path.pop()
-            # path.append(str('+')+str(nums[i]))
-            # x2 = dp(i-1, remain - nums[i])
-            # path.pop()
-            # return x1 + x2
-        return dp(n-1, target)
+        # n = len(nums)
+        # path = []
+        # mem = {}
+        # def dp(i, remain):
+        #     if i < 0:
+        #         if remain == 0:
+        #             return 1
+        #         return 0
+        #     k = str(i) + '_' + str(remain)
+        #     if k in mem:
+        #         return mem[k]
+        #     mem[k] = dp(i-1, remain + nums[i]) + dp(i-1, remain - nums[i])
+        #     return mem[k]
+        # return dp(n-1, target)
+        s = sum(nums) + target
+        if s % 2 == 1 or s < 0:
+            return 0
+        s = s // 2
+        # mem = {}
+        # def dp(i, remain):
+        #     print(i, remain, mem)
+        #     if i < 0:
+        #         return 0
+        #     if remain == 0:
+        #         return 1
+        #     k = str(i) + '_' + str(remain)
+        #     if k in mem:
+        #         return mem[k]
+        #     if nums[i] > remain:
+        #         mem[k] = dp(i-1, remain)
+        #     else:
+        #         mem[k] = dp(i-1, remain) + dp(i-1, remain - nums[i])
+        #     return mem[k]
+            
+        # return dp(len(nums)-1, s)
+        dp = [[0] * (s+1) for _ in range(len(nums)+1)]
+        # for i in range(len(dp)):
+        #     dp[i][0] = 1
+        dp[0][0] = 1
+        for i in range(1, len(nums)+1):
+            for j in range(0, s+1):
+                if j < nums[i-1]:
+                    dp[i][j] = dp[i-1][j]
+                else:
+                    dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i-1]]
+        return dp[len(nums)][s]
+
 # @lc code=end
 

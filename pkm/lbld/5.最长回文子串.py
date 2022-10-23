@@ -47,57 +47,21 @@
 
 
 class Solution:
-    # def longestPalindrome(self, s: str) -> str:
-    #     maxlen = 0
-    #     res = str()
-    #     def lenofp(s, i):
-    #         nonlocal maxlen
-    #         nonlocal res
-    #         a = i - 1
-    #         b = i + 1
-    #         l1 = 1
-    #         while a >= 0 and b < len(s) and s[a] == s[b]:
-    #             l1 += 2
-    #             a -= 1
-    #             b += 1
-    #         if l1 > maxlen:
-    #             maxlen = l1
-    #             t = int((l1-1)/2)
-    #             res = s[i-t:i+t+1]
-    #         a = i
-    #         b = i + 1
-    #         l2 = 0
-    #         while a >= 0 and b < len(s) and s[a] == s[b]:
-    #             l2 += 2
-    #             a -= 1
-    #             b += 1
-    #         if l2 > maxlen:
-    #             maxlen = l2
-    #             t = int(l2/2)
-    #             res = s[i-(t-1):i+t+1]
-    #     for i in range(len(s)):
-    #         l = lenofp(s, i)
-    #     return res
-    
     def longestPalindrome(self, s):
-        def findp(s, l, r):
-            while l >= 0 and r < len(s) and s[l] == s[r]:
-                l -= 1
-                r += 1
-            return s[l+1:r]
-        res = str()
-        maxlen = 0
+        maxlen, start= 0, 0
+        def find(i, j):
+            if j == len(s):
+                return
+            while i >= 0 and j < len(s) and s[i] == s[j]:
+                i -= 1
+                j += 1
+            nonlocal maxlen, start
+            if maxlen < (j-1) - (i+1) + 1:
+                maxlen = (j-1) - (i+1) + 1
+                start = i + 1
         for i in range(len(s)):
-            p1 = findp(s, i, i)
-            if len(p1) > maxlen:
-                maxlen = len(p1)
-                res = p1
-            p2 = str()
-            if i < len(s) - 1:
-                p2 = findp(s, i, i+1)
-            if len(p2) > maxlen:
-                maxlen = len(p2)
-                res = p2
-        return res
+            find(i, i)
+            find(i, i+1)
+        return s[start:(start+maxlen)]
 # @lc code=end
 

@@ -40,16 +40,22 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    # def maxDepth(self, root: Optional[TreeNode]) -> int:
+    #     res = 0
+    #     def traverse(root, depth):
+    #         if not root:
+    #             return
+    #         nonlocal res
+    #         res = max(res, depth)
+    #         traverse(root.left, depth + 1)
+    #         traverse(root.right, depth + 1)
+    #     traverse(root, 1)
+    #     return res
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        res = 0
-        def traverse(root, depth):
-            if not root:
-                return
-            nonlocal res
-            res = max(res, depth)
-            traverse(root.left, depth + 1)
-            traverse(root.right, depth + 1)
-        traverse(root, 1)
-        return res
+        if not root:
+            return 0
+        leftmax = self.maxDepth(root.left)
+        rightmax = self.maxDepth(root.right)
+        return max(leftmax, rightmax) + 1
 # @lc code=end
 

@@ -113,33 +113,42 @@
 
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        # if not headA or not headB:
+        #     return None
+        # len1 , len2 = 0, 0
+        # aa = ListNode()
+        # a = aa
+        # a.next = headA
+        # bb = ListNode()
+        # b = bb
+        # b.next = headB
+        # while a:
+        #     len1 += 1
+        #     a = a.next
+        # while b:
+        #     len2 += 1
+        #     b = b.next
+        # if len1 > len2:
+        #     for i in range(len1 - len2):
+        #         aa = aa.next
+        # else:
+        #     for i in range(len2 - len1):
+        #         bb = bb.next
+        # while aa:
+        #     if aa == bb:
+        #         return aa
+        #     aa = aa.next
+        #     bb = bb.next
+        # return None
+
         if not headA or not headB:
             return None
-        len1 , len2 = 0, 0
-        aa = ListNode()
-        a = aa
-        a.next = headA
-        bb = ListNode()
-        b = bb
-        b.next = headB
-        while a:
-            len1 += 1
-            a = a.next
-        while b:
-            len2 += 1
-            b = b.next
-        if len1 > len2:
-            for i in range(len1 - len2):
-                aa = aa.next
-        else:
-            for i in range(len2 - len1):
-                bb = bb.next
-        while aa:
-            if aa == bb:
-                return aa
-            aa = aa.next
-            bb = bb.next
-        return None
+        a, b = headA, headB
+        while a != b:
+            a = a.next if a else headB
+            b = b.next if b else headA
+        return a
+
                 
 
         

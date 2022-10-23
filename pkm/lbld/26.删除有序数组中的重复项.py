@@ -74,14 +74,14 @@
 # @lc code=start
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        if len(nums) < 2:
-            return len(nums)
-        s = 0
-        for i in range(1, len(nums)):
-            if nums[i] != nums[s]:
-                s += 1
-                nums[s] = nums[i]
-        return s+1
+        l = r = 0
+        n = len(nums)
+        while r < n:
+            if nums[l] != nums[r]:
+                l += 1
+                nums[l] = nums[r]
+            r += 1
+        return l+1
 
 # @lc code=end
 

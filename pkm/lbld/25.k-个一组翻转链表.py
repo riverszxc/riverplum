@@ -65,25 +65,20 @@ class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         if not head:
             return None
-        a = head
-        b = head
+        p = head
         for i in range(k-1):
-            if not b.next:
+            p = p.next
+            if not p:
                 return head
-            b = b.next
-        nexthead = b.next
-        def reverse(l, r):
-            prev = None
-            cur = l
-            while cur != r:
-                tmp = cur.next
-                cur.next = prev
-                prev = cur
-                cur = tmp
-            cur.next = prev
-        reverse(a, b)
-        a.next = self.reverseKGroup(nexthead, k)
-        return b
+        suffix = p.next
+        pre, cur = None, head
+        while cur != suffix:
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nxt
+        head.next = self.reverseKGroup(suffix, k)
+        return pre
 
 
 # @lc code=end

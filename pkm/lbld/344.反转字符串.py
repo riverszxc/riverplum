@@ -49,14 +49,9 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        if not s:
-            return
-        l = 0
-        r = len(s) - 1
+        l, r = 0, len(s)-1
         while l < r:
-            tmp = s[r]
-            s[r] = s[l]
-            s[l] = tmp
+            s[l], s[r] = s[r], s[l]
             l += 1
             r -= 1
         

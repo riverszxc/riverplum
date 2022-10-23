@@ -56,16 +56,21 @@
 #         self.next = next
 class Solution:
     def middleNode(self, head: ListNode) -> ListNode:
-        f = ListNode()
-        s = ListNode()
-        f.next = head
-        s.next = head
-        while f and f.next:
-            f = f.next.next
-            s = s.next
-        if not f:
-            return s
-        else:
-            return s.next
+        # f = ListNode()
+        # s = ListNode()
+        # f.next = head
+        # s.next = head
+        # while f and f.next:
+        #     f = f.next.next
+        #     s = s.next
+        # if not f:
+        #     return s
+        # else:
+        #     return s.next
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
 # @lc code=end
 

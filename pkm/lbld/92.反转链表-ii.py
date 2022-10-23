@@ -56,29 +56,44 @@
 #         self.next = next
 class Solution:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
-        if left == right:
+        # if left == right:
+        #     return head
+        # cur = head
+        # a, b, c, d = None, None, None, None
+        # prev = None
+        # for i in range(1, right+1):
+        #     if i == left - 1:
+        #         a = cur
+        #     if i == left:
+        #         b = cur
+        #     if i == right:
+        #         c = cur
+        #         d = c.next
+        #         if a:
+        #             a.next = c
+        #         b.next = d
+        #     if i >= left and i <= right:
+        #         next = cur.next
+        #         cur.next = prev
+        #         prev = cur
+        #         cur = next
+        #         continue
+        #     cur = cur.next
+        # return head if left > 1 else c
+        if left == 1:
+            suffix1 = head
+            for i in range(right-1):
+                suffix1 = suffix1.next
+            suffix2 = suffix1.next
+            pre, cur = suffix2, head
+            while cur != suffix2:
+                nxt = cur.next
+                cur.next = pre
+                pre = cur
+                cur = nxt
+            return pre
+        else:
+            head.next = self.reverseBetween(head.next, left-1, right-1)
             return head
-        cur = head
-        a, b, c, d = None, None, None, None
-        prev = None
-        for i in range(1, right+1):
-            if i == left - 1:
-                a = cur
-            if i == left:
-                b = cur
-            if i == right:
-                c = cur
-                d = c.next
-                if a:
-                    a.next = c
-                b.next = d
-            if i >= left and i <= right:
-                next = cur.next
-                cur.next = prev
-                prev = cur
-                cur = next
-                continue
-            cur = cur.next
-        return head if left > 1 else c
 # @lc code=end
 

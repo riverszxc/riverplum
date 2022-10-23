@@ -67,14 +67,12 @@ class Solution:
     def findDuplicateSubtrees(self, root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
         res = []
         mem = {}
-        if not root:
-            return res
         def traverse(root):
             if not root:
                 return '#'
             l = traverse(root.left)
             r = traverse(root.right)
-            t = ','.join([str(root.val), l, r]) # 需要逗号，否则1，11和11，1分不开
+            t = ','.join([str(root.val), l, r])
             mem[t] = mem.get(t, 0) + 1
             if mem[t] == 2:
                 res.append(root)
