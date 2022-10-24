@@ -57,22 +57,37 @@
 #         self.right = right
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
-        res = 0
+        # res = 0
+        # def traverse(root):
+        #     if not root:
+        #         return
+        #     traverse2(root, targetSum)
+        #     traverse(root.left)
+        #     traverse(root.right)
+        # def traverse2(root, sum):
+        #     if not root:
+        #         return
+        #     nonlocal res
+        #     if sum == root.val:
+        #         res += 1
+        #     traverse2(root.left, sum - root.val)
+        #     traverse2(root.right, sum - root.val)
+
+        # traverse(root)
+        # return res
+        presum = res = 0
+        presumcount = {0:1}
         def traverse(root):
             if not root:
                 return
-            traverse2(root, targetSum)
+            nonlocal presum, res
+            presum += root.val
+            res += presumcount.get(presum - targetSum, 0)
+            presumcount[presum] = presumcount.get(presum, 0) + 1
             traverse(root.left)
             traverse(root.right)
-        def traverse2(root, sum):
-            if not root:
-                return
-            nonlocal res
-            if sum == root.val:
-                res += 1
-            traverse2(root.left, sum - root.val)
-            traverse2(root.right, sum - root.val)
-
+            presumcount[presum] -= 1
+            presum -= root.val
         traverse(root)
         return res
 # @lc code=end
