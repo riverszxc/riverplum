@@ -82,7 +82,7 @@ class Solution:
         end = l = r = start
         res = ''
         while r < len(s):
-            if s[r] != ' ' and s[r-1] == ' ':
+            if s[r] != ' ' and (r == start or s[r-1] == ' '):
                 l = r
             if  (r == len(s) - 1 and s[r] != ' ') or (s[r] != ' ' and s[r+1] == ' '):
                 reverse(l, r)

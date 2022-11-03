@@ -45,37 +45,53 @@
 
 # @lc code=start
 class Solution:
+    # def canPartition(self, nums: List[int]) -> bool:
+    #     n = len(nums)
+    #     s = sum(nums)
+    #     if s % 2 != 0:
+    #         return False
+    #     s = s // 2
+    #     # mem = {}
+    #     # def dp(i, remain):
+    #     #     # print(i, remain, mem)
+    #     #     if i < 0:
+    #     #         return False
+    #     #     if remain == 0:
+    #     #         return True
+    #     #     k = str(i)+'_'+str(remain)
+    #     #     if k in mem:
+    #     #         return mem[k]
+    #     #     if remain < nums[i]:
+    #     #         mem[k] = dp(i-1, remain)
+    #     #     else:
+    #     #         mem[k] = dp(i-1, remain) or dp(i-1, remain-nums[i])
+    #     #     return mem[k]
+    #     # return dp(n-1, s)
+    #     dp = [[False] * (s+1) for _ in range(len(nums)+1)]
+    #     for i in range(len(dp)):
+    #         dp[i][0] = True
+    #     for i in range(1, len(nums)+1):
+    #         for j in range(1, s+1):
+    #             if j < nums[i-1]:
+    #                 dp[i][j] = dp[i-1][j]
+    #             else:
+    #                 dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]
+    #     return dp[n][s]
     def canPartition(self, nums: List[int]) -> bool:
-        n = len(nums)
         s = sum(nums)
-        if s % 2 != 0:
+        if s % 2 == 1:
             return False
         s = s // 2
-        # mem = {}
-        # def dp(i, remain):
-        #     # print(i, remain, mem)
-        #     if i < 0:
-        #         return False
-        #     if remain == 0:
-        #         return True
-        #     k = str(i)+'_'+str(remain)
-        #     if k in mem:
-        #         return mem[k]
-        #     if remain < nums[i]:
-        #         mem[k] = dp(i-1, remain)
-        #     else:
-        #         mem[k] = dp(i-1, remain) or dp(i-1, remain-nums[i])
-        #     return mem[k]
-        # return dp(n-1, s)
-        dp = [[False] * (s+1) for _ in range(len(nums)+1)]
-        for i in range(len(dp)):
-            dp[i][0] = True
-        for i in range(1, len(nums)+1):
-            for j in range(1, s+1):
-                if j < nums[i-1]:
-                    dp[i][j] = dp[i-1][j]
+        n = len(nums)
+        dp = [[False] * (n+1) for _ in range(s+1)]
+        for j in range(n):
+            dp[0][j] = True
+        for i in range(1, s+1):
+            for j in range(1, n+1):
+                if nums[j-1] > i:
+                    dp[i][j] = dp[i][j-1]
                 else:
-                    dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]
-        return dp[n][s]
+                    dp[i][j] = dp[i][j-1] or dp[i-nums[j-1]][j-1]
+        return dp[s][n]
 # @lc code=end
 

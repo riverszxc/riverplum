@@ -76,15 +76,27 @@ class Solution:
     #     for i in range(1, n + 1):
     #         dp[i] = max(nums[i-1], nums[i-1] + dp[i-1])
     #     return max(dp)
-    def maxSubArray(self, nums):
+    # def maxSubArray(self, nums):
+    #     n = len(nums)
+    #     x_1 = float('-inf')
+    #     x = nums[0]
+    #     res = float('-inf')
+    #     for i in range(1, n+1):
+    #         x = max(nums[i-1], x_1 + nums[i-1])
+    #         x_1 = x
+    #         res = max(res, x)
+    #     return res
+    def maxSubArray(self, nums: List[int]) -> int:
         n = len(nums)
-        x_1 = float('-inf')
-        x = nums[0]
-        res = float('-inf')
+        # dp = [float('-inf')] * (n+1)
+        # for i in range(1, n+1):
+        #     dp[i] = max(nums[i-1], dp[i-1] + nums[i-1])
+        # return max(dp)
+        dp = res = float('-inf')
         for i in range(1, n+1):
-            x = max(nums[i-1], x_1 + nums[i-1])
-            x_1 = x
-            res = max(res, x)
+            dp = max(nums[i-1], dp + nums[i-1])
+            res = max(res, dp)
         return res
+
 # @lc code=end
 

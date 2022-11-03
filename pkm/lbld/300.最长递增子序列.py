@@ -62,16 +62,31 @@
 
 # @lc code=start
 class Solution:
+    # def lengthOfLIS(self, nums: List[int]) -> int:
+    #     n = len(nums)
+    #     dp = [1] * (n+1)
+    #     for i in range(1, n+1):
+    #         for j in range(1,i):
+    #             if nums[i-1] > nums[j-1]:
+    #                 dp[i] = max(dp[i], dp[j]+1)
+    #     return max(dp)
     def lengthOfLIS(self, nums: List[int]) -> int:
         n = len(nums)
-        dp = [0] * (n+1)
+        group = []
         for i in range(n):
-            t = 0
-            for j in range(i):
-                if nums[i] > nums[j]:
-                    t = max(t, dp[j+1])
-            dp[i+1] = t + 1
-        return max(dp)
+            if not group or nums[i] > group[-1]:
+                group.append(nums[i])
+            else:
+                l, r = 0, len(group)-1
+                while l <= r:
+                    mid = l + (r-l)//2
+                    if group[mid] >= nums[i]:
+                        r = mid-1
+                    else:
+                        l = mid+1
+                group[l] = nums[i]
+        return len(group)
+                
 
 # @lc code=end
 

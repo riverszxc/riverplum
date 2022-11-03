@@ -69,21 +69,33 @@
 # @lc code=start
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
+        # n = len(coins)
+        # mem = {}
+        # def dp(i, remain):
+        #     if remain == 0:
+        #         return 1
+        #     if i < 0:
+        #         return 0
+        #     k = str(i) + '_' + str(remain)
+        #     if k in mem:
+        #         return mem[k]
+        #     if remain < coins[i]:
+        #         mem[k] = dp(i-1, remain)
+        #     else:
+        #         mem[k] =  dp(i-1, remain) + dp(i, remain-coins[i])
+        #     return mem[k]
+        # return dp(n-1, amount)
         n = len(coins)
-        mem = {}
-        def dp(i, remain):
-            if remain == 0:
-                return 1
-            if i < 0:
-                return 0
-            k = str(i) + '_' + str(remain)
-            if k in mem:
-                return mem[k]
-            if remain < coins[i]:
-                mem[k] = dp(i-1, remain)
-            else:
-                mem[k] =  dp(i-1, remain) + dp(i, remain-coins[i])
-            return mem[k]
-        return dp(n-1, amount)
+        dp = [[0] * (n+1) for _ in range(amount+1)]
+        for j in range(n+1):
+            dp[0][j] = 1
+        for i in range(1, amount+1):
+            for j in range(1, n+1):
+                if coins[j-1] > i:
+                    dp[i][j] = dp[i][j-1]
+                else:
+                    dp[i][j] = dp[i][j-1] + dp[i-coins[j-1]][j]
+        return dp[amount][n]
+
 # @lc code=end
 

@@ -1,19 +1,19 @@
 #
-# @lc app=leetcode.cn id=144 lang=python3
+# @lc app=leetcode.cn id=94 lang=python3
 #
-# [144] 二叉树的前序遍历
+# [94] 二叉树的中序遍历
 #
-# https://leetcode.cn/problems/binary-tree-preorder-traversal/description/
+# https://leetcode.cn/problems/binary-tree-inorder-traversal/description/
 #
 # algorithms
-# Easy (71.24%)
-# Likes:    918
+# Easy (76.10%)
+# Likes:    1611
 # Dislikes: 0
-# Total Accepted:    719.8K
-# Total Submissions: 1M
+# Total Accepted:    998.6K
+# Total Submissions: 1.3M
 # Testcase Example:  '[1,null,2,3]'
 #
-# 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
+# 给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
 # 
 # 
 # 
@@ -21,7 +21,7 @@
 # 
 # 
 # 输入：root = [1,null,2,3]
-# 输出：[1,2,3]
+# 输出：[1,3,2]
 # 
 # 
 # 示例 2：
@@ -38,32 +38,18 @@
 # 输出：[1]
 # 
 # 
-# 示例 4：
-# 
-# 
-# 输入：root = [1,2]
-# 输出：[1,2]
-# 
-# 
-# 示例 5：
-# 
-# 
-# 输入：root = [1,null,2]
-# 输出：[1,2]
-# 
-# 
 # 
 # 
 # 提示：
 # 
 # 
 # 树中节点数目在范围 [0, 100] 内
-# -100 
+# -100 <= Node.val <= 100
 # 
 # 
 # 
 # 
-# 进阶：递归算法很简单，你可以通过迭代算法完成吗？
+# 进阶: 递归算法很简单，你可以通过迭代算法完成吗？
 # 
 #
 
@@ -75,27 +61,30 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    # def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    # def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
     #     res = []
+    #     if not root:
+    #         return res
     #     def traverse(root):
     #         if not root:
     #             return
-    #         res.append(root.val)
     #         traverse(root.left)
+    #         res.append(root.val)
     #         traverse(root.right)
     #     traverse(root)
     #     return res
-    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        res, stack = [], []
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
         if not root:
             return res
+        stack = []
         p = root
         while p or stack:
             while p:
-                res.append(p.val)
                 stack.append(p)
                 p = p.left
             p = stack.pop()
+            res.append(p.val)
             p = p.right
         return res
 # @lc code=end

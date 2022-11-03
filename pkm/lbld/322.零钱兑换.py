@@ -74,12 +74,22 @@ class Solution:
     #         return mem[amount]
     #     return dp(coins, amount)
     def coinChange(self, coins: List[int], amount: int):
+        # dp = [[amount+1] * (len(coins)+1) for _ in range(amount+1)]
+        # for j in range(len(coins)+1):
+        #     dp[0][j] = 0
+        # for i in range(1, amount+1):
+        #     for j in range(1, len(coins)+1):
+        #         if coins[j-1] > i:
+        #             dp[i][j] = dp[i][j-1]
+        #         else:
+        #             dp[i][j] = min(dp[i][j-1], dp[i-coins[j-1]][j] + 1)
+        # return dp[amount][len(coins)] if dp[amount][len(coins)] < amount+1 else -1
         dp = [amount+1] * (amount+1)
         dp[0] = 0
-        for am in range(1, amount+1):
-            for c in coins:
-                if c <= amount:
-                    dp[am] = min(dp[am], dp[am-c] + 1)
+        for i in range(1, amount+1):
+            for j in range(1, len(coins)+1):
+                if coins[j-1] <= i:
+                    dp[i] = min(dp[i], dp[i-coins[j-1]]+1)
         return dp[amount] if dp[amount] < amount+1 else -1
 # @lc code=end
 
