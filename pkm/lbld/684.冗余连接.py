@@ -62,21 +62,34 @@ from curses import nonl
 
 
 class Solution:
+    # def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+    #     cluster = [x for x in range(len(edges)+1)]
+    #     def findcluster(node):
+    #         nonlocal cluster
+    #         if cluster[node] != node:
+    #             return findcluster(cluster[node])
+    #         return cluster[node]
+    #     def mergecluster(node1, node2):
+    #         nonlocal cluster
+    #         cluster[findcluster(node1)] = cluster[findcluster(node2)]
+    #     for node1, node2 in edges:
+    #         if findcluster(node1) != findcluster(node2):
+    #             mergecluster(node1, node2)
+    #         else:
+    #             return [node1, node2]
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
-        cluster = [x for x in range(len(edges)+1)]
+        cluster = [i for i in range(len(edges)+1)]
         def findcluster(node):
-            nonlocal cluster
-            if cluster[node] != node:
-                return findcluster(cluster[node])
-            return cluster[node]
-        def mergecluster(node1, node2):
-            nonlocal cluster
-            cluster[findcluster(node1)] = cluster[findcluster(node2)]
-        for node1, node2 in edges:
-            if findcluster(node1) != findcluster(node2):
-                mergecluster(node1, node2)
+            if cluster[node] == node:
+                return node
+            return findcluster(cluster[node])
+        def merge(a, b):
+            cluster[findcluster(a)] = findcluster(b)
+        for a, b in edges:
+            if findcluster(a) != findcluster(b):
+                merge(a, b)
             else:
-                return [node1, node2]
+                return [a, b]
 
 # @lc code=end
 

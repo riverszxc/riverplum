@@ -62,19 +62,34 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def __init__(self):
-        self.mem = {}
-    def rob(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
-        if root in self.mem:
-            return self.mem[root]
-        rob = root.val \
-            + (0 if not root.left else (self.rob(root.left.left) + self.rob(root.left.right))) \
-            + (0 if not root.right else (self.rob(root.right.left) + self.rob(root.right.right)))
-        not_rob = self.rob(root.left) + self.rob(root.right)
-        res = max(rob, not_rob)
-        self.mem[root] = res
-        return res
+    # def __init__(self):
+    #     self.mem = {}
+    # def rob(self, root: Optional[TreeNode]) -> int:
+    #     if not root:
+    #         return 0
+    #     if root in self.mem:
+    #         return self.mem[root]
+    #     rob = root.val \
+    #         + (0 if not root.left else (self.rob(root.left.left) + self.rob(root.left.right))) \
+    #         + (0 if not root.right else (self.rob(root.right.left) + self.rob(root.right.right)))
+    #     not_rob = self.rob(root.left) + self.rob(root.right)
+    #     res = max(rob, not_rob)
+    #     self.mem[root] = res
+    #     return res
+    def rob(self, root):
+        mem = {}
+        def go(root):
+            if not root:
+                return 0
+            if root in mem:
+                return mem[root]
+            rob = root.val \
+                + (0 if not root.left else go(root.left.left) + go(root.left.right)) \
+                + (0 if not root.right else go(root.right.left) + go(root.right.right))
+            not_rob = go(root.left) + go(root.right)
+            res = max(rob, not_rob)
+            mem[root] = res
+            return res
+        return go(root)
 # @lc code=end
 

@@ -60,19 +60,38 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    # def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
+    #     if not root.left and not root.right:
+    #         return -1
+    #     left, right = root.left.val, root.right.val
+    #     if root.left.val == root.val:
+    #         left = self.findSecondMinimumValue(root.left)
+    #     if root.right.val == root.val:
+    #         right = self.findSecondMinimumValue(root.right)
+    #     if left == -1:
+    #         return right
+    #     if right == -1:
+    #         return left
+    #     return min(right, left)
     def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
-        if not root.left and not root.right:
-            return -1
-        left, right = root.left.val, root.right.val
-        if root.left.val == root.val:
-            left = self.findSecondMinimumValue(root.left)
-        if root.right.val == root.val:
-            right = self.findSecondMinimumValue(root.right)
-        if left == -1:
-            return right
-        if right == -1:
-            return left
-        return min(right, left)
+        res = -1
+        first = root.val
+        def traverse(root):
+            if not root:
+                return
+            nonlocal res
+            if res == -1:
+                if root.val > first:
+                    res = root.val
+            else:
+                if root.val > res:
+                    return
+                if root.val > first:
+                    res = min(root.val, res)
+            traverse(root.left)
+            traverse(root.right)
+        traverse(root)
+        return res
         
 # @lc code=end
 

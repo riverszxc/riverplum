@@ -76,17 +76,19 @@ class Solution:
         # traverse(root)
         # return res
         presum = res = 0
-        presumcount = {0:1}
+        count = {0:1}
         def traverse(root):
             if not root:
                 return
             nonlocal presum, res
             presum += root.val
-            res += presumcount.get(presum - targetSum, 0)
-            presumcount[presum] = presumcount.get(presum, 0) + 1
+            if presum - targetSum in count:
+                res += count[presum - targetSum] #val可能是负数，所以前面有多种可能
+            count[presum] = count.get(presum, 0) + 1
             traverse(root.left)
             traverse(root.right)
-            presumcount[presum] -= 1
+            # 以下两行顺序不要搞错
+            count[presum] -= 1
             presum -= root.val
         traverse(root)
         return res

@@ -52,35 +52,45 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    # def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+    #     if not root:
+    #         return False
+    #     # res = []
+    #     # def traverse(root):
+    #     #     if not root:
+    #     #         return
+    #     #     traverse(root.left)
+    #     #     res.append(root.val)
+    #     #     traverse(root.right)
+    #     def traverse2(root):
+    #         res = []
+    #         if not root:
+    #             return res
+    #         res += traverse2(root.left)
+    #         res.append(root.val)
+    #         res += traverse2(root.right)
+    #         return res
+    #     # traverse(root)
+    #     res = traverse2(root)
+    #     i ,j = 0, len(res)-1
+    #     while i < j:
+    #         sum = res[i] + res[j]
+    #         if sum == k:
+    #             return True
+    #         elif sum < k:
+    #             i += 1
+    #         else:
+    #             j -= 1
+    #     return False
     def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
-        if not root:
-            return False
-        # res = []
-        # def traverse(root):
-        #     if not root:
-        #         return
-        #     traverse(root.left)
-        #     res.append(root.val)
-        #     traverse(root.right)
-        def traverse2(root):
-            res = []
+        m = set()
+        def traverse(root):
             if not root:
-                return res
-            res += traverse2(root.left)
-            res.append(root.val)
-            res += traverse2(root.right)
-            return res
-        # traverse(root)
-        res = traverse2(root)
-        i ,j = 0, len(res)-1
-        while i < j:
-            sum = res[i] + res[j]
-            if sum == k:
+                return False
+            if k - root.val in m:
                 return True
-            elif sum < k:
-                i += 1
-            else:
-                j -= 1
-        return False
+            m.add(root.val)
+            return traverse(root.left) or traverse(root.right)
+        return traverse(root)
 # @lc code=end
 
