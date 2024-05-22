@@ -49,22 +49,35 @@
 
 # @lc code=start
 class Solution:
-    def minPathSum(self, grid: List[List[int]]) -> int:
+    # def minPathSum(self, grid: List[List[int]]) -> int:
+    #     m = len(grid)
+    #     n = len(grid[0])
+    #     mem = [[-1] * n for _ in range(m)]
+    #     def dp(i, j):
+    #         if i == 0 and j == 0:
+    #             return grid[0][0]
+    #         if mem[i][j] != -1:
+    #             return mem[i][j]
+    #         if i == 0:
+    #             mem[i][j] = dp(i, j-1) + grid[i][j]
+    #         elif j == 0:
+    #             mem[i][j] = dp(i-1, j) + grid[i][j]
+    #         else:
+    #             mem[i][j] = min(dp(i, j-1), dp(i-1, j)) + grid[i][j]
+    #         return mem[i][j]
+    #     return dp(m-1, n-1)
+    def minPathSum(self, grid):
         m = len(grid)
         n = len(grid[0])
-        mem = [[-1] * n for _ in range(m)]
-        def dp(i, j):
-            if i == 0 and j == 0:
-                return grid[0][0]
-            if mem[i][j] != -1:
-                return mem[i][j]
-            if i == 0:
-                mem[i][j] = dp(i, j-1) + grid[i][j]
-            elif j == 0:
-                mem[i][j] = dp(i-1, j) + grid[i][j]
-            else:
-                mem[i][j] = min(dp(i, j-1), dp(i-1, j)) + grid[i][j]
-            return mem[i][j]
-        return dp(m-1, n-1)
+        dp = [[0]*(n+1) for i in range(m+1)]
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                if i == 1:
+                    dp[i][j] = dp[i][j-1] + grid[i-1][j-1]
+                elif j == 1:
+                    dp[i][j] = dp[i-1][j] + grid[i-1][j-1]
+                else:
+                    dp[i][j] = min(dp[i][j-1], dp[i-1][j]) + grid[i-1][j-1]
+        return dp[m][n]
 # @lc code=end
 
