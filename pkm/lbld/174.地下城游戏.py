@@ -75,26 +75,35 @@
 # @lc code=start
 class Solution:
     def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        # m = len(dungeon)
+        # if m == 0:
+        #     return 0
+        # n = len(dungeon[0])
+        # mem = [[-1] * n for _ in range(m)]
+        # def dp(i, j):
+        #     if i == m-1 and j == n-1:
+        #         return (1 - dungeon[i][j]) if dungeon[i][j] < 0 else 1
+        #     if mem[i][j] != -1:
+        #         return mem[i][j]
+        #     if i == m-1:
+        #         mem[i][j] = dp(i, j+1) - dungeon[i][j]
+        #         mem[i][j] = 1 if mem[i][j] <= 0 else mem[i][j]
+        #     elif j == n-1:
+        #         mem[i][j] = dp(i+1, j) - dungeon[i][j]
+        #         mem[i][j] = 1 if mem[i][j] <= 0 else mem[i][j]
+        #     else:
+        #         mem[i][j] = min(dp(i, j+1), dp(i+1, j)) - dungeon[i][j]
+        #         mem[i][j] = 1 if mem[i][j] <= 0 else mem[i][j]
+        #     return mem[i][j]
+        # return dp(0, 0)
         m = len(dungeon)
-        if m == 0:
-            return 0
         n = len(dungeon[0])
-        mem = [[-1] * n for _ in range(m)]
-        def dp(i, j):
-            if i == m-1 and j == n-1:
-                return (1 - dungeon[i][j]) if dungeon[i][j] < 0 else 1
-            if mem[i][j] != -1:
-                return mem[i][j]
-            if i == m-1:
-                mem[i][j] = dp(i, j+1) - dungeon[i][j]
-                mem[i][j] = 1 if mem[i][j] <= 0 else mem[i][j]
-            elif j == n-1:
-                mem[i][j] = dp(i+1, j) - dungeon[i][j]
-                mem[i][j] = 1 if mem[i][j] <= 0 else mem[i][j]
-            else:
-                mem[i][j] = min(dp(i, j+1), dp(i+1, j)) - dungeon[i][j]
-                mem[i][j] = 1 if mem[i][j] <= 0 else mem[i][j]
-            return mem[i][j]
-        return dp(0, 0)
+        dp = [[float('inf')] * (n+1) for _ in range(m+1)]
+        dp[m][n-1] = dp[m-1][n] = 1
+        for i in range(m-1, -1, -1):
+            for j in range(n-1, -1, -1):
+                t = min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j]
+                dp[i][j] = t if t > 0 else 1
+        return dp[0][0]
 # @lc code=end
 
