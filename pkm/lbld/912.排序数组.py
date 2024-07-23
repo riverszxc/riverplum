@@ -124,6 +124,24 @@ class Solution:
             nums[l:(r+1)] = tmp[l:(r+1)]
         mergesort(0, len(nums)-1)
         return nums
-
+    # def sortArray(self, nums: List[int]) -> List[int]:
+    #     def partition(l, r):
+    #         t = random.randint(l, r)
+    #         nums[t], nums[r] = nums[r], nums[t]
+    #         i = l
+    #         for j in range(l, r):
+    #             if nums[j] < nums[r]:
+    #                 nums[i], nums[j] = nums[j], nums[i]
+    #                 i += 1
+    #         nums[i], nums[r] = nums[r], nums[i]
+    #         return i
+    #     def quicksort(l, r):
+    #         if l > r:
+    #             return
+    #         p = partition(l, r)
+    #         quicksort(l, p-1)
+    #         quicksort(p+1, r)
+    #     quicksort(0, len(nums)-1)
+    #     return nums
 # @lc code=end
 
